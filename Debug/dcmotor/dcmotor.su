@@ -1,0 +1,4 @@
+../dcmotor/dcmotor.c:12:6:dcmotor_Init	24	static
+../dcmotor/dcmotor.c:20:6:dcmotor_Start	24	static
+../dcmotor/dcmotor.c:25:6:dcmotor_setDirection	16	static
+../dcmotor/dcmotor.c:44:6:dcmotor_Stop	24	static
