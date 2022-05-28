@@ -1,3 +1,6 @@
 ../Core/Src/adc.c:30:6:MX_ADC1_Init	24	static
 ../Core/Src/adc.c:83:6:HAL_ADC_MspInit	80	static
-../Core/Src/adc.c:128:6:HAL_ADC_MspDeInit	16	static
+../Core/Src/adc.c:131:6:HAL_ADC_MspDeInit	16	static
+../Core/Src/adc.c:159:6:ADC_Select_Current_Sensor	24	static
+../Core/Src/adc.c:171:6:ADC_Select_Voltage_Sensor	24	static
+../Core/Src/adc.c:183:6:ADC_Select_Temperature_Sensor	24	static

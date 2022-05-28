@@ -1,5 +1,19 @@
 {
     "files.associations": {
-        "mb.h": "c"
+        "mb.h": "c",
+        "dcmotor_config.h": "c",
+        "dcmotor.h": "c",
+        "dc_motor.h": "c",
+        "main.h": "c",
+        "stm32g0xx_hal.h": "c",
+        "stm32g0xx_hal_conf.h": "c",
+        "usart.h": "c",
+        "gpio.h": "c",
+        "tim.h": "c",
+        "medianfilter.h": "c",
+        "dma.h": "c",
+        "adc.h": "c",
+        "mbport.h": "c",
+        "dc_motor_config.h": "c"
     }
 }

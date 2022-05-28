@@ -24,7 +24,9 @@ OBJCOPY_BIN :=
 SUBDIRS := \
 Core/Src \
 Core/Startup \
+DC_Motor \
 Drivers/STM32G0xx_HAL_Driver/Src \
+MedianFilter \
 dcmotor \
 modbus \
 w25qxx \

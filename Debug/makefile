@@ -12,7 +12,9 @@ RM := rm -rf
 -include w25qxx/subdir.mk
 -include modbus/subdir.mk
 -include dcmotor/subdir.mk
+-include MedianFilter/subdir.mk
 -include Drivers/STM32G0xx_HAL_Driver/Src/subdir.mk
+-include DC_Motor/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
 -include objects.mk
@@ -67,7 +69,7 @@ main-build: Modbus-DCDriver-G030K8.elf secondary-outputs
 
 # Tool invocations
 Modbus-DCDriver-G030K8.elf Modbus-DCDriver-G030K8.map: $(OBJS) $(USER_OBJS) C:\Users\User\STM32CubeIDE\WORKSPACE\Modbus-DCDriver-G030K8\STM32G030K8TX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Modbus-DCDriver-G030K8.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"C:\Users\User\STM32CubeIDE\WORKSPACE\Modbus-DCDriver-G030K8\STM32G030K8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Modbus-DCDriver-G030K8.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "Modbus-DCDriver-G030K8.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0plus -T"C:\Users\User\STM32CubeIDE\WORKSPACE\Modbus-DCDriver-G030K8\STM32G030K8TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Modbus-DCDriver-G030K8.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
