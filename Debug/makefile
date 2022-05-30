@@ -11,10 +11,9 @@ RM := rm -rf
 -include sources.mk
 -include w25qxx/subdir.mk
 -include modbus/subdir.mk
--include dcmotor/subdir.mk
 -include MedianFilter/subdir.mk
 -include Drivers/STM32G0xx_HAL_Driver/Src/subdir.mk
--include DC_Motor/subdir.mk
+-include DCMotor/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
 -include objects.mk

@@ -38,14 +38,14 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart_ex.h \
  ../Core/Inc/adc.h ../Core/Inc/main.h ../Core/Inc/dma.h ../Core/Inc/spi.h \
  ../Core/Inc/tim.h ../Core/Inc/usart.h ../Core/Inc/gpio.h \
- ../Core/Src/../../dcmotor/dcmotor.h ../Core/Src/../../modbus/mb.h \
- ../Core/Src/../../modbus/port.h ../Core/Src/../../modbus/mbport.h \
- ../Core/Src/../../modbus/mbproto.h ../Core/Src/../../modbus/mbport.h \
- ../Core/Src/../../w25qxx/w25qxx.h ../Core/Src/../../w25qxx/w25qxxConf.h \
+ ../Core/Src/../../modbus/mb.h ../Core/Src/../../modbus/port.h \
+ ../Core/Src/../../modbus/mbport.h ../Core/Src/../../modbus/mbproto.h \
+ ../Core/Src/../../modbus/mbport.h ../Core/Src/../../w25qxx/w25qxx.h \
+ ../Core/Src/../../w25qxx/w25qxxConf.h \
  ../Core/Src/../../MedianFilter/MedianFilter.h \
- ../Core/Src/../../DC_Motor/DC_Motor.h \
- ../Core/Src/../../DC_Motor/DC_Motor_Config.h \
- ../Core/Src/../../DC_Motor/../MedianFilter/MedianFilter.h
+ ../Core/Src/../../DCMotor/DCMotor.h \
+ ../Core/Src/../../DCMotor/DCMotor_Config.h \
+ ../Core/Src/../../DCMotor/../MedianFilter/MedianFilter.h
 ../Core/Inc/main.h:
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h:
 ../Core/Inc/stm32g0xx_hal_conf.h:
@@ -91,7 +91,6 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/tim.h:
 ../Core/Inc/usart.h:
 ../Core/Inc/gpio.h:
-../Core/Src/../../dcmotor/dcmotor.h:
 ../Core/Src/../../modbus/mb.h:
 ../Core/Src/../../modbus/port.h:
 ../Core/Src/../../modbus/mbport.h:
@@ -100,6 +99,6 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Src/../../w25qxx/w25qxx.h:
 ../Core/Src/../../w25qxx/w25qxxConf.h:
 ../Core/Src/../../MedianFilter/MedianFilter.h:
-../Core/Src/../../DC_Motor/DC_Motor.h:
-../Core/Src/../../DC_Motor/DC_Motor_Config.h:
-../Core/Src/../../DC_Motor/../MedianFilter/MedianFilter.h:
+../Core/Src/../../DCMotor/DCMotor.h:
+../Core/Src/../../DCMotor/DCMotor_Config.h:
+../Core/Src/../../DCMotor/../MedianFilter/MedianFilter.h:

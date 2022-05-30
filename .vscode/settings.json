@@ -15,5 +15,11 @@
         "adc.h": "c",
         "mbport.h": "c",
         "dc_motor_config.h": "c"
-    }
+    },
+    "gitflow4code.hotfixes": [
+        {
+            "name": "hotfix/async-dcmotor",
+            "base": "develop"
+        }
+    ]
 }

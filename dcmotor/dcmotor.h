@@ -1,45 +1,62 @@
-/*
- * dcmotor.h
- *
- *  Created on: Mar 16, 2022
- *      Author: User
- */
+#ifndef DCMotor_h
+#define DCMotor_h
 
-#ifndef DCMOTOR_H_
-#define DCMOTOR_H_
-
-#define HAL_TIM_MODULE_ENABLED
-
-#include "stm32g0xx_hal.h"
-
-// DC Motor Rotation Directions
-#define DIR_CW    0
-#define DIR_CCW   1
-
-// DC Motor PWM Properties
-// #define DC_MOTOR_PWM_RES  10
-// #define DC_MOTOR_F_PWM    500
-
-// The Number OF DC MOTORs To Be Used In The Project
-#define DC_MOTOR_UNITS  1
-
-typedef struct
+#ifdef __cplusplus
+extern "C"
 {
-	TIM_HandleTypeDef* TIM_Instance;
-	uint32_t EN1_TIM_CH;
-	uint32_t EN2_TIM_CH;
-	TIM_HandleTypeDef* OC_Instance;
-	uint32_t OC_TIM_CH;
-	DMA_HandleTypeDef* DMA_Instance;
-	uint32_t DMA_CC;
-	uint32_t CC1_DEST;
-	uint32_t CC2_DEST;
-}DC_MOTOR_CfgType;
+#endif
 
-/*-----[ Prototypes For All Functions ]-----*/
-void dcmotor_Init(uint8_t au8_MOTOR_Instance);
-void dcmotor_Start(uint8_t au8_MOTOR_Instance);
-void dcmotor_setDirection(uint8_t au8_MOTOR_Instance, uint8_t au8_DIR, uint32_t pwm_data);
-void dcmotor_Stop(uint8_t au8_MOTOR_Instance);
+    #include "main.h"
+    #include "tim.h"
+    #include "adc.h"
+    #include "DCMotor_Config.h"
+    #include "../MedianFilter/MedianFilter.h"
 
-#endif /* DCMOTOR_H_ */
+    typedef struct 
+    {
+        uint8_t is_running;
+        int                 motor_speed;
+        int                 motor_old_speed;
+        uint32_t            acceleration;
+        uint32_t            elapsed_time;
+        uint32_t            direction;
+        uint8_t direction_flag;
+        MedianFilter*       current_filter;
+        int                 voltage_limit;
+        int                 current_limit;
+        int set_speed;
+        uint32_t ticks;
+        void (*__running)();
+
+    } DC_Motor_t;
+
+    extern DC_Motor_t motor;
+    void DCMotor_Start(uint8_t status);
+    uint8_t DCMotor_IsRunning();
+    void DCMotor_GetDirection();
+    void DCMotor_Init();
+    void DCMotor_Deinit();
+    void DCMotor_SetElapsedTime(uint32_t millisecond);
+    uint32_t DCMotor_GetAcceleration();
+    void DCMotor_SetSpeed(int speed);
+    void DCMotor_SetDirection(uint8_t dir);
+    void DCMotor_Run();
+    void DCMotor_Stop();
+    void DCMotor_Jogg(uint8_t dir, int speed, int time_in_millis);
+    void DCMotor_Reset();
+    void DCMotor_Brake();
+    void DCMotor_GetSensor(uint8_t channel, int time_in_millis);
+    void DCMotor_CalibrateCurrent(int total_sample, int time_in_millis);
+    int DCMotor_GetMaxCurrentFilter();
+    int DCMotor_GetCurrentValue();
+    int DCMotor_GetVoltageValue();
+    void DCMotor_SetCurrentLimit(int value);
+    void DCMotor_SetVoltageLimit(int value);
+    int DCMotor_GetCurrentLimit();
+    int DCMotor_GetCurrentSpeed();
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif

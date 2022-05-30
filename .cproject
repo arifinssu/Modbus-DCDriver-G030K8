@@ -74,13 +74,12 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="dcmotor"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="DC_Motor"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="w25qxx"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Core"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="DCMotor"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="MedianFilter"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="modbus"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Core"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="Drivers"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="w25qxx"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

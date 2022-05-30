@@ -1,5 +1,5 @@
-dcmotor/dcmotor.o: ../dcmotor/dcmotor.c ../Core/Inc/main.h \
- ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h \
+DCMotor/DCMotor.o: ../DCMotor/DCMotor.c ../DCMotor/DCMotor.h \
+ ../Core/Inc/main.h ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h \
  ../Core/Inc/stm32g0xx_hal_conf.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_rcc.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_def.h \
@@ -36,7 +36,9 @@ dcmotor/dcmotor.o: ../dcmotor/dcmotor.c ../Core/Inc/main.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim_ex.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart_ex.h \
- ../dcmotor/dcmotor.h ../dcmotor/dcmotor_config.h
+ ../Core/Inc/tim.h ../Core/Inc/main.h ../Core/Inc/adc.h \
+ ../DCMotor/DCMotor_Config.h ../DCMotor/../MedianFilter/MedianFilter.h
+../DCMotor/DCMotor.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h:
 ../Core/Inc/stm32g0xx_hal_conf.h:
@@ -75,5 +77,8 @@ dcmotor/dcmotor.o: ../dcmotor/dcmotor.c ../Core/Inc/main.h \
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_tim_ex.h:
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart.h:
 ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_uart_ex.h:
-../dcmotor/dcmotor.h:
-../dcmotor/dcmotor_config.h:
+../Core/Inc/tim.h:
+../Core/Inc/main.h:
+../Core/Inc/adc.h:
+../DCMotor/DCMotor_Config.h:
+../DCMotor/../MedianFilter/MedianFilter.h:
