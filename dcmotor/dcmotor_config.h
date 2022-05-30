@@ -1,15 +1,15 @@
-/*
- * dcmotor_cfg.h
- *
- *  Created on: Mar 16, 2022
- *      Author: User
- */
+#ifndef DCMotor_Config_h
+#define DCMotor_Config_h
 
-#ifndef DCMOTOR_CONFIG_H_
-#define DCMOTOR_CONFIG_H_
+#define motor_tim           htim3
+#define clockwise           TIM_CHANNEL_1
+#define counterclockwise    TIM_CHANNEL_2
+#define sd_pin              TIM_CHANNEL_4
 
-#include "dcmotor.h"
+#define sensor_adc          hadc1
+#define current_sensor_pin  ADC_CHANNEL_0
+#define voltage_sensor_pin  ADC_CHANNEL_10
+#define adc_rank            ADC_REGULAR_RANK_1
+#define adc_sampling        ADC_SAMPLINGTIME_COMMON_1
 
-extern const DC_MOTOR_CfgType DC_MOTOR_CfgParam[DC_MOTOR_UNITS];
-
-#endif /* DCMOTOR_CONFIG_H_ */
+#endif
