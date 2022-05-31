@@ -1,4 +1,4 @@
-DCMotor/DCMotor.o: ../DCMotor/DCMotor.c ../DCMotor/DCMotor.h \
+DCMotor/dcmotor.o: ../DCMotor/dcmotor.c ../DCMotor/DCMotor.h \
  ../Core/Inc/main.h ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal.h \
  ../Core/Inc/stm32g0xx_hal_conf.h \
  ../Drivers/STM32G0xx_HAL_Driver/Inc/stm32g0xx_hal_rcc.h \

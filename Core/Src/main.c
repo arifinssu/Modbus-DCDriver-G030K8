@@ -231,12 +231,12 @@ int main(void)
 
     // DCMotor_SetDirection(0);
     // DCMotor_SetSpeed(30);
-    // DCMotor_Run();
+    // DCMotor_Update();
     // DCMotor_Stop();
 
     // DCMotor_SetDirection(1);
     // DCMotor_SetSpeed(30);
-    // DCMotor_Run();
+    // DCMotor_Update();
     // DCMotor_Stop();
 
     // HAL_Delay(10);
@@ -278,9 +278,9 @@ int main(void)
         // HAL_Delay(100);
 
         eMBPoll();
-        DCMotor_Run();
+        DCMotor_Update();
 
-        // if (usRegHoldingBuf[HREG_DCMOTOR_RUN] == 1) DCMotor_Run();
+        // if (usRegHoldingBuf[HREG_DCMOTOR_RUN] == 1) DCMotor_Update();
         // else
         // {
         //     DCMotor_Stop();
@@ -368,13 +368,10 @@ uint8_t fetchHoldingRegsData(int iRegIndex)
                 DCMotor_Stop();
             }
         case HREG_DCMOTOR_DIRECTION:
-            if(DCMotor_GetCurrentSpeed() == 0)
-            {
-                DCMotor_GetDirection();
-            }
+            usRegHoldingBuf[HREG_DCMOTOR_DIRECTION] = DCMotor_GetDirectionValue();
             break;
         case HREG_DCMOTOR_SET_ELAPSED_TIME:
-            // usRegHoldingBuf[HREG_DCMOTOR_SET_ELAPSED_TIME] = DCMotor_GetAcceleration();
+            usRegHoldingBuf[HREG_DCMOTOR_SET_ELAPSED_TIME] = DCMotor_GetElapsedTime();
             break;
         case HREG_DCMOTOR_SET_SPEED:
             break;
@@ -382,7 +379,7 @@ uint8_t fetchHoldingRegsData(int iRegIndex)
             usRegHoldingBuf[HREG_DCMOTOR_SET_LIMIT_VOLTAGE] = DCMotor_GetAcceleration();
             break;
         case HREG_DCMOTOR_SET_LIMIT_CURRENT:
-            usRegHoldingBuf[HREG_DCMOTOR_SET_LIMIT_CURRENT] = HAL_GetTick();
+            usRegHoldingBuf[HREG_DCMOTOR_SET_LIMIT_CURRENT] = DCMotor_GetFilteredCurrent();
             break;
         case HREG_DCMOTOR_GET_CURRENT_SPEED:
             usRegHoldingBuf[HREG_DCMOTOR_GET_CURRENT_SPEED] = DCMotor_GetCurrentSpeed();
@@ -391,8 +388,7 @@ uint8_t fetchHoldingRegsData(int iRegIndex)
             usRegHoldingBuf[HREG_DCMOTOR_GET_VOLTAGE] = DCMotor_GetVoltageValue();
             break;
         case HREG_DCMOTOR_GET_CURRENT:
-            MedianFilter_In(motor.current_filter, DCMotor_GetCurrentValue());
-            usRegHoldingBuf[HREG_DCMOTOR_GET_CURRENT] = MedianFilter_Out(motor.current_filter);
+            usRegHoldingBuf[HREG_DCMOTOR_GET_CURRENT] = DCMotor_GetFilteredCurrent();
             break;
         case HREG_DCMOTOR_GET_RESISTANCE:
             usRegHoldingBuf[HREG_DCMOTOR_GET_RESISTANCE] = DCMotor_GetResistanceValue();
@@ -408,40 +404,6 @@ uint8_t fetchHoldingRegsData(int iRegIndex)
             break;
     }
     return numUs;
-}
-
-/**
- *@brief Validate modbus writing holding register data.
- *
- *@param iRegIndex 
- *@param usNRegs 
- *@return result
- */
-uint8_t validateWriteHoldingRegs(int iRegIndex, uint16_t usNRegs)
-{
-    uint8_t result = 1;
-    for (size_t i = 0; i < usNRegs; ++i)
-    {
-        switch (iRegIndex + i)
-        {
-            case HREG_DCMOTOR_RUN:
-                break;
-            case HREG_DCMOTOR_DIRECTION:
-                break;
-            case HREG_DCMOTOR_SET_ELAPSED_TIME:
-                break;
-            case HREG_DCMOTOR_SET_SPEED:
-                break;
-            case HREG_DCMOTOR_SET_LIMIT_VOLTAGE:
-                break;
-            case HREG_DCMOTOR_SET_LIMIT_CURRENT:
-                break;
-            default:
-                if (i == 0) return 0;
-                break;
-        }
-    }
-    return result;
 }
 
 /**
@@ -462,10 +424,8 @@ void writeHoldingRegs(int iRegIndex, uint16_t tempReg)
         case HREG_DCMOTOR_DIRECTION:
             if (tempReg > 1) break;
             usRegHoldingBuf[HREG_DCMOTOR_DIRECTION] = tempReg;
-            int s = DCMotor_GetCurrentSpeed();
             DCMotor_SetDirection(tempReg);
             DCMotor_Stop();
-            // DCMotor_SetSpeed(s);
             break;
         case HREG_DCMOTOR_SET_ELAPSED_TIME:
             usRegHoldingBuf[HREG_DCMOTOR_SET_ELAPSED_TIME] = tempReg;
@@ -480,6 +440,10 @@ void writeHoldingRegs(int iRegIndex, uint16_t tempReg)
             // usRegHoldingBuf[HREG_DCMOTOR_SET_LIMIT_VOLTAGE] = tempReg;
             break;
         case HREG_DCMOTOR_SET_LIMIT_CURRENT:
+            if (tempReg == 1)
+            {
+                dc.motor_current_limit = 1;
+            }
             usRegHoldingBuf[HREG_DCMOTOR_SET_LIMIT_CURRENT] = tempReg;
             break;
         // case HREG_MODBUS_ADDRESS:
@@ -546,8 +510,6 @@ eMBErrorCode eMBRegHoldingCB(UCHAR *pucRegBuffer, USHORT usAddress, USHORT usNRe
         if ((usAddress >= REG_HOLDING_START) && (usAddress + usNRegs <= REG_HOLDING_START + REG_HOLDING_NREGS))
         {
             iRegIndex = (int)(usAddress - usRegHoldingStart);
-            if (validateWriteHoldingRegs(iRegIndex, usNRegs) == 0)
-                return MB_EINVAL;	// bad request
 
             while (usNRegs > 0)
             {

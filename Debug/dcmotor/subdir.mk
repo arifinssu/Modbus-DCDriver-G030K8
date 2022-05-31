@@ -5,13 +5,13 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../DCMotor/DCMotor.c 
+../DCMotor/dcmotor.c 
 
 OBJS += \
-./DCMotor/DCMotor.o 
+./DCMotor/dcmotor.o 
 
 C_DEPS += \
-./DCMotor/DCMotor.d 
+./DCMotor/dcmotor.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -21,7 +21,7 @@ DCMotor/%.o DCMotor/%.su: ../DCMotor/%.c DCMotor/subdir.mk
 clean: clean-DCMotor
 
 clean-DCMotor:
-	-$(RM) ./DCMotor/DCMotor.d ./DCMotor/DCMotor.o ./DCMotor/DCMotor.su
+	-$(RM) ./DCMotor/dcmotor.d ./DCMotor/dcmotor.o ./DCMotor/dcmotor.su
 
 .PHONY: clean-DCMotor
 
