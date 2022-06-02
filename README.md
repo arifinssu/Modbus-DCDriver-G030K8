@@ -7,7 +7,15 @@
 - W25qxx SPI Flash
 - Modbus
 
-### Hotfix Focus
-- Async DCMotor setup with manipulating HAL_Delay() ticks
-- simulating arduino map() function to use with speed timer_period conversion
-- Emulating DCMotor_Run() to use with start, stop, acceleration_elapsed_time
+### Fixed Bug
+- Async DCMotor setup
+- mapping dutycycle
+- DCMotor_Update() only on loop (renamed from DCMotor_Run function)
+
+### Known Bug (will focus on next Hotfix)
+- Calibrating current fatal error with async
+
+### New Hotfix Focus
+- Calibrating current with async
+- Cleaning DCMotor_Update()
+- Refactoring if no new bug found

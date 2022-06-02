@@ -14,28 +14,26 @@ extern "C"
 
     typedef struct 
     {
-        uint8_t             motor_is_running;
-        int                 motor_current_speed;
-        int                 motor_hold_speed;
-        uint32_t            motor_acceleration;
-        uint32_t            motor_elapsed_time;
-        uint32_t            motor_direction;
-        uint8_t             motor_direction_flag;
-        MedianFilter*       motor_current_filter;
-        int                 motor_voltage_limit;
-        int                 motor_current_limit;
-        int                 motor_set_speed;
-        uint32_t            motor_ticks;
-        void                (*motor_run)();
-
+        uint8_t         motor_is_running;
+        int             motor_current_speed;
+        int             motor_hold_speed;
+        uint32_t        motor_acceleration;
+        uint32_t        motor_elapsed_time;
+        uint32_t        motor_direction;
+        uint8_t         motor_direction_flag;
+        MedianFilter*   motor_current_filter;
+        int             motor_voltage_limit;
+        int             motor_current_limit;
+        int             motor_set_speed;
+        uint32_t        motor_ticks;
+        void            (*motor_run)();
     } DCMotor_t;
 
     extern DCMotor_t dc;
-    void DCMotor_Start(uint8_t status);
-    uint8_t DCMotor_IsRunning();
+    void DCMotor_Start();
+    uint8_t DCMotor_Status();
     void DCMotor_GetDirection();
     void DCMotor_Init();
-    void DCMotor_Deinit();
     void DCMotor_SetElapsedTime(uint32_t millisecond);
     uint32_t DCMotor_GetAcceleration();
     void DCMotor_HoldSpeed(int speed);
@@ -47,15 +45,17 @@ extern "C"
     void DCMotor_Brake();
     void DCMotor_GetSensor(uint8_t channel, int time_in_millis);
     int DCMotor_GetMaxCurrentFilter();
-    void DCMotor_CalibrateCurrent(int total_sample, int time_in_millis);
+    int DCMotor_CalibrateCurrent(uint8_t total_sample, int time_in_millis);
     int DCMotor_GetCurrentValue();
     int DCMotor_GetVoltageValue();
     void DCMotor_SetCurrentLimit(int value);
     void DCMotor_SetVoltageLimit(int value);
     int DCMotor_GetCurrentLimit();
+    int DCMotor_GetVoltageLimit();
     int DCMotor_GetCurrentSpeed();
     uint8_t DCMotor_GetDirectionValue();
     int DCMotor_GetFilteredCurrent();
+    uint32_t DCMotor_GetElapsedTime();
 
 #ifdef __cplusplus
 }

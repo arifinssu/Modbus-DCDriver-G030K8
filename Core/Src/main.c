@@ -154,14 +154,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef* htim)
         adcSwitch = !adcSwitch;
         if (adcSwitch == 1)
         {
-            rawVoltage = HAL_ADC_GetValue(&sensor_adc);
-            HAL_ADC_Stop(&sensor_adc);
+            rawVoltage = HAL_ADC_GetValue(&adc_handle);
+            HAL_ADC_Stop(&adc_handle);
             DCMotor_GetSensor(0, 100);
         }
         else
         {
-            rawCurrent = HAL_ADC_GetValue(&sensor_adc);
-            HAL_ADC_Stop(&sensor_adc);
+            rawCurrent = HAL_ADC_GetValue(&adc_handle);
+            HAL_ADC_Stop(&adc_handle);
             DCMotor_GetSensor(1, 100);
         }
     }
@@ -339,17 +339,6 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-/**
- *@brief Fetching modbus input register data.
- *
- *@param iRegIndex
- *@return uint8_t 
- */
-uint8_t fetchInputRegsData(int iRegIndex)
-{
-    uint8_t numUs = 1;
-    return numUs;
-}
 
 /**
  *@brief Fetching modbus holding register data.
@@ -363,10 +352,8 @@ uint8_t fetchHoldingRegsData(int iRegIndex)
     switch (iRegIndex)
     {
         case HREG_DCMOTOR_RUN:
-            if (usRegHoldingBuf[HREG_DCMOTOR_RUN] == 0)
-            {
-                DCMotor_Stop();
-            }
+            usRegHoldingBuf[HREG_DCMOTOR_RUN] = DCMotor_Status();
+            break;
         case HREG_DCMOTOR_DIRECTION:
             usRegHoldingBuf[HREG_DCMOTOR_DIRECTION] = DCMotor_GetDirectionValue();
             break;
@@ -376,10 +363,10 @@ uint8_t fetchHoldingRegsData(int iRegIndex)
         case HREG_DCMOTOR_SET_SPEED:
             break;
         case HREG_DCMOTOR_SET_LIMIT_VOLTAGE:
-            usRegHoldingBuf[HREG_DCMOTOR_SET_LIMIT_VOLTAGE] = DCMotor_GetAcceleration();
+            usRegHoldingBuf[HREG_DCMOTOR_SET_LIMIT_VOLTAGE] = DCMotor_GetVoltageLimit();
             break;
         case HREG_DCMOTOR_SET_LIMIT_CURRENT:
-            usRegHoldingBuf[HREG_DCMOTOR_SET_LIMIT_CURRENT] = DCMotor_GetFilteredCurrent();
+            usRegHoldingBuf[HREG_DCMOTOR_SET_LIMIT_CURRENT] = DCMotor_GetCurrentLimit();
             break;
         case HREG_DCMOTOR_GET_CURRENT_SPEED:
             usRegHoldingBuf[HREG_DCMOTOR_GET_CURRENT_SPEED] = DCMotor_GetCurrentSpeed();
@@ -417,34 +404,31 @@ void writeHoldingRegs(int iRegIndex, uint16_t tempReg)
     switch (iRegIndex)
     {
         case HREG_DCMOTOR_RUN:
-            if (tempReg > 1) break;
-            usRegHoldingBuf[HREG_DCMOTOR_RUN] = tempReg;
-            DCMotor_Start(tempReg);
+            if(tempReg > 1) break;
+            if(tempReg == 1) DCMotor_Start();
+            else DCMotor_Stop();
             break;
         case HREG_DCMOTOR_DIRECTION:
-            if (tempReg > 1) break;
-            usRegHoldingBuf[HREG_DCMOTOR_DIRECTION] = tempReg;
+            if(tempReg > 1) break;
+            DCMotor_HoldSpeed(DCMotor_GetCurrentSpeed());
             DCMotor_SetDirection(tempReg);
-            DCMotor_Stop();
+            DCMotor_SetSpeed(0);
             break;
         case HREG_DCMOTOR_SET_ELAPSED_TIME:
-            usRegHoldingBuf[HREG_DCMOTOR_SET_ELAPSED_TIME] = tempReg;
             DCMotor_SetElapsedTime(tempReg);
             break;
         case HREG_DCMOTOR_SET_SPEED:
-            if (tempReg > 100) break;
+            if(tempReg > 100) break;
             usRegHoldingBuf[HREG_DCMOTOR_SET_SPEED] = tempReg;
+            DCMotor_HoldSpeed(DCMotor_GetCurrentSpeed());
+            if(tempReg == 0) DCMotor_Stop();
             DCMotor_SetSpeed(tempReg);
             break;
         case HREG_DCMOTOR_SET_LIMIT_VOLTAGE:
-            // usRegHoldingBuf[HREG_DCMOTOR_SET_LIMIT_VOLTAGE] = tempReg;
+            DCMotor_SetVoltageLimit(tempReg);
             break;
         case HREG_DCMOTOR_SET_LIMIT_CURRENT:
-            if (tempReg == 1)
-            {
-                dc.motor_current_limit = 1;
-            }
-            usRegHoldingBuf[HREG_DCMOTOR_SET_LIMIT_CURRENT] = tempReg;
+            DCMotor_SetCurrentLimit(tempReg);
             break;
         // case HREG_MODBUS_ADDRESS:
         //     break;
